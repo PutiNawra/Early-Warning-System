@@ -10,18 +10,53 @@ const statusLegend = [
     color: "bg-emerald-500",
     title: "Hijau (Normal)",
     description: "Kondisi aman, ketinggian air di bawah ambang batas waspada.",
+    threshold: "< 150 cm",
+    action: "Aktivitas normal, tetap pantau dashboard setiap 30 menit.",
+    icon: "✅",
   },
   {
     color: "bg-amber-500",
     title: "Kuning (Waspada)",
     description: "Ketinggian air meningkat, masyarakat diminta waspada dan bersiap.",
+    threshold: "150 – 199 cm",
+    action: "Siapkan tas darurat, dokumen penting, dan rute evakuasi keluarga.",
+    icon: "⚠️",
+  },
+  {
+    color: "bg-orange-500",
+    title: "Oren (Siaga)",
+    description: "Kondisi mendekati bahaya, masyarakat diminta bersiap untuk evakuasi segera.",
+    threshold: "190 – 219 cm",
+    action: "Aktifkan rencana evakuasi dan prioritaskan kelompok rentan untuk bergerak lebih awal.",
+    icon: "🟠",
   },
   {
     color: "bg-rose-500",
     title: "Merah (Bahaya / Evakuasi)",
     description: "Kondisi darurat, evakuasi segera diperlukan sesuai arahan petugas.",
+    threshold: "≥ 220 cm",
+    action: "Segera evakuasi ke titik aman terdekat dan ikuti arahan petugas.",
+    icon: "🚨",
   },
 ];
+
+const emergencyMeta: Record<string, { scope: string; response: string; note: string }> = {
+  "BPBD Kota": {
+    scope: "Koordinasi kebencanaan wilayah",
+    response: "Target respons 5-10 menit",
+    note: "Gunakan untuk laporan kejadian banjir skala lingkungan/kecamatan.",
+  },
+  Basarnas: {
+    scope: "Evakuasi & penyelamatan",
+    response: "Target respons 10-20 menit",
+    note: "Hubungi saat ada korban terjebak atau butuh evakuasi air deras.",
+  },
+  Ambulans: {
+    scope: "Bantuan medis darurat",
+    response: "Target respons 10-15 menit",
+    note: "Prioritaskan untuk kondisi medis kritis selama kejadian banjir.",
+  },
+};
 
 const evacuationGuide = [
   "Pantau notifikasi resmi dan ikuti instruksi petugas saat status merah aktif.",
@@ -142,15 +177,77 @@ export default function Home() {
           </Reveal>
 
           <div className="grid gap-4 md:grid-cols-3">
-            {statusLegend.map((item, index) => (
+            {statusLegend.slice(0, 3).map((item, index) => (
               <Reveal key={item.title} delayMs={90 * (index + 1)}>
-                <Card className="h-full border-blue-100">
-                  <span className={`inline-flex h-3 w-16 rounded-full ${item.color}`} />
+                <Card className="h-full border-blue-100 bg-white/95">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className={`inline-flex h-3 w-16 rounded-full ${item.color}`} />
+                    <span className="text-lg" aria-hidden="true">{item.icon}</span>
+                  </div>
                   <h3 className="mt-4 text-lg font-semibold text-slate-900">{item.title}</h3>
                   <p className="mt-2 text-sm text-slate-600">{item.description}</p>
+
+                  <div className="mt-4 rounded-lg bg-slate-50 p-3 text-xs text-slate-700">
+                    <p className="font-semibold text-slate-800">Ambang indikator</p>
+                    <p className="mt-1">{item.threshold}</p>
+                  </div>
+
+                  <div className="mt-3 rounded-lg bg-blue-50 p-3 text-xs text-blue-900">
+                    <p className="font-semibold">Tindakan cepat</p>
+                    <p className="mt-1 leading-relaxed">{item.action}</p>
+                  </div>
                 </Card>
               </Reveal>
             ))}
+          </div>
+
+          <div className="mt-4 grid gap-4 lg:grid-cols-3">
+            <Reveal delayMs={320}>
+              {statusLegend.slice(3, 4).map((item) => (
+                <Card key={item.title} className="h-full border-blue-100 bg-white/95">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className={`inline-flex h-3 w-16 rounded-full ${item.color}`} />
+                    <span className="text-lg" aria-hidden="true">{item.icon}</span>
+                  </div>
+                  <h3 className="mt-4 text-lg font-semibold text-slate-900">{item.title}</h3>
+                  <p className="mt-2 text-sm text-slate-600">{item.description}</p>
+
+                  <div className="mt-4 rounded-lg bg-slate-50 p-3 text-xs text-slate-700">
+                    <p className="font-semibold text-slate-800">Ambang indikator</p>
+                    <p className="mt-1">{item.threshold}</p>
+                  </div>
+
+                  <div className="mt-3 rounded-lg bg-blue-50 p-3 text-xs text-blue-900">
+                    <p className="font-semibold">Tindakan cepat</p>
+                    <p className="mt-1 leading-relaxed">{item.action}</p>
+                  </div>
+                </Card>
+              ))}
+            </Reveal>
+
+            <Reveal delayMs={380} className="lg:col-span-2">
+              <div className="rounded-xl border border-blue-100 bg-white p-4 md:p-5">
+                <h3 className="text-base font-semibold text-slate-900">Ringkasan Keputusan Cepat</h3>
+                <div className="mt-3 grid gap-3 text-sm text-slate-700 md:grid-cols-2">
+                  <div className="rounded-lg bg-emerald-50 p-3">
+                    <p className="font-semibold text-emerald-700">Normal</p>
+                    <p className="mt-1">Pantau rutin, tidak perlu evakuasi.</p>
+                  </div>
+                  <div className="rounded-lg bg-amber-50 p-3">
+                    <p className="font-semibold text-amber-700">Waspada</p>
+                    <p className="mt-1">Siapkan rencana evakuasi keluarga.</p>
+                  </div>
+                  <div className="rounded-lg bg-orange-50 p-3">
+                    <p className="font-semibold text-orange-700">Siaga</p>
+                    <p className="mt-1">Kurangi aktivitas luar, siap bergerak ke titik aman.</p>
+                  </div>
+                  <div className="rounded-lg bg-rose-50 p-3">
+                    <p className="font-semibold text-rose-700">Bahaya</p>
+                    <p className="mt-1">Evakuasi segera ke titik aman resmi.</p>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -171,16 +268,40 @@ export default function Home() {
                 <Card className="border-slate-200">
                   <h3 className="text-lg font-semibold text-slate-900">{contact.name}</h3>
                   <p className="mt-1 text-sm text-slate-600">Nomor prioritas tanggap darurat</p>
+
+                  <div className="mt-3 rounded-lg bg-slate-50 p-3 text-xs text-slate-700">
+                    <p className="font-semibold text-slate-900">Fokus layanan</p>
+                    <p className="mt-1">{emergencyMeta[contact.name]?.scope ?? "Respon darurat"}</p>
+                    <p className="mt-2 font-semibold text-slate-900">Estimasi respons</p>
+                    <p className="mt-1">{emergencyMeta[contact.name]?.response ?? "Secepat mungkin"}</p>
+                  </div>
+
                   <a
                     href={`tel:${contact.phone}`}
                     className="mt-4 inline-flex rounded-lg bg-rose-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-rose-700"
                   >
                     Hubungi {contact.phone}
                   </a>
+
+                  <p className="mt-3 text-xs leading-relaxed text-slate-500">
+                    {emergencyMeta[contact.name]?.note ?? "Sampaikan lokasi, jumlah korban, dan kondisi akses jalan secara singkat."}
+                  </p>
                 </Card>
               </Reveal>
             ))}
           </div>
+
+          <Reveal delayMs={280} className="mt-4">
+            <div className="rounded-xl border border-rose-100 bg-rose-50/60 p-4 md:p-5">
+              <h3 className="text-base font-semibold text-rose-900">Sebelum Menekan Tombol Darurat</h3>
+              <ul className="mt-3 grid gap-2 text-sm text-rose-900/90 md:grid-cols-2">
+                <li className="rounded-lg bg-white/70 px-3 py-2">Sebutkan lokasi detail (alamat/patok terdekat).</li>
+                <li className="rounded-lg bg-white/70 px-3 py-2">Jelaskan kondisi air (tinggi, arus, akses jalan).</li>
+                <li className="rounded-lg bg-white/70 px-3 py-2">Informasikan jumlah warga terdampak.</li>
+                <li className="rounded-lg bg-white/70 px-3 py-2">Simpan daya baterai ponsel untuk komunikasi lanjutan.</li>
+              </ul>
+            </div>
+          </Reveal>
         </div>
       </section>
 
