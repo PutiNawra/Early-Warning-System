@@ -2,71 +2,59 @@ import Link from "next/link";
 import Image from "next/image";
 import { Card } from "@/components/ui/Card";
 import { Reveal } from "@/components/ui/Reveal";
+import { PublicRealtimeDashboardSection } from "@/components/landing/PublicRealtimeDashboardSection";
+import { emergencyContacts } from "@/constants";
 
-const featureItems = [
+const statusLegend = [
   {
-    title: "Monitoring Sensor Real-Time",
-    description: "Pantau tinggi muka air, curah hujan, dan status konektivitas sensor dalam satu dashboard.",
+    color: "bg-emerald-500",
+    title: "Hijau (Normal)",
+    description: "Kondisi aman, ketinggian air di bawah ambang batas waspada.",
   },
   {
-    title: "Pusat Notifikasi Cepat",
-    description: "Kirim peringatan dini lebih cepat berdasarkan ambang batas dan kondisi lapangan terkini.",
+    color: "bg-amber-500",
+    title: "Kuning (Waspada)",
+    description: "Ketinggian air meningkat, masyarakat diminta waspada dan bersiap.",
   },
   {
-    title: "Peta Risiko Interaktif",
-    description: "Lihat titik sensor, area terdampak, dan prioritas respons melalui peta terintegrasi.",
-  },
-  {
-    title: "Laporan Otomatis",
-    description: "Ringkas data harian hingga bulanan untuk evaluasi kesiapsiagaan dan pengambilan keputusan.",
-  },
-  {
-    title: "Koordinasi Tim Lapangan",
-    description: "Samakan informasi antara operator, posko, dan stakeholder agar respons lebih terarah.",
-  },
-  {
-    title: "Keamanan Data Operasional",
-    description: "Akses berbasis peran dan proteksi data untuk menjaga integritas informasi kebencanaan.",
+    color: "bg-rose-500",
+    title: "Merah (Bahaya / Evakuasi)",
+    description: "Kondisi darurat, evakuasi segera diperlukan sesuai arahan petugas.",
   },
 ];
 
-const workflowItems = [
-  {
-    step: "1",
-    title: "Setup Sensor & Lokasi",
-    description: "Daftarkan sensor, kalibrasi ambang batas, dan petakan titik pemantauan prioritas.",
-  },
-  {
-    step: "2",
-    title: "Monitoring Harian",
-    description: "Operator memantau data masuk, tren anomali, serta kualitas koneksi perangkat.",
-  },
-  {
-    step: "3",
-    title: "Alert & Respons",
-    description: "Saat status meningkat, sistem mengaktifkan notifikasi dan panduan tindakan awal.",
-  },
-  {
-    step: "4",
-    title: "Evaluasi & Peningkatan",
-    description: "Tinjau histori kejadian untuk memperbarui SOP dan strategi mitigasi berikutnya.",
-  },
+const evacuationGuide = [
+  "Pantau notifikasi resmi dan ikuti instruksi petugas saat status merah aktif.",
+  "Matikan listrik utama rumah dan amankan dokumen penting ke tempat kedap air.",
+  "Bawa tas siaga, bantu lansia/anak, lalu bergerak ke titik evakuasi terdekat.",
+  "Tetap di jalur aman dan hindari menerobos arus banjir atau kabel listrik terbuka.",
 ];
 
-const stats = [
-  { label: "Titik Sensor Aktif", value: "150+" },
-  { label: "Area Pemantauan", value: "40+" },
-  { label: "Notifikasi Terkirim", value: "12.000+" },
-  { label: "Instansi Terhubung", value: "75+" },
+const emergencyKit = [
+  "Dokumen penting (KTP, KK, surat berharga)",
+  "Obat pribadi, P3K, dan masker",
+  "Air minum, makanan siap saji, perlengkapan bayi",
+  "Senter, powerbank, peluit, dan baterai cadangan",
+  "Pakaian ganti dan perlengkapan kebersihan dasar",
 ];
 
-const institutions = [
-  "BPBD Kota Jakarta",
-  "Posko Siaga Ciliwung",
-  "Dinas SDA Regional",
-  "Tim Reaksi Cepat Wilayah Timur",
-  "Komunitas Relawan Sungai",
-  "Pusat Kendali Darurat Kota",
+const faqs = [
+  {
+    q: "Bagaimana data sensor diperbarui?",
+    a: "Data sensor dikirim berkala ke sistem dan ditampilkan hampir real-time pada dashboard publik.",
+  },
+  {
+    q: "Apa peran admin dalam sistem EWS?",
+    a: "Admin mengelola sensor, memvalidasi data/alert, dan memastikan informasi darurat dikirim tepat waktu.",
+  },
+  {
+    q: "Apa yang harus dilakukan saat status Kuning?",
+    a: "Siapkan dokumen penting, tas siaga, dan pantau terus pembaruan status dari dashboard maupun petugas.",
+  },
+  {
+    q: "Apakah tombol darurat bisa langsung menelepon?",
+    a: "Ya, tombol menggunakan fitur one-click call, terutama efektif pada perangkat mobile.",
+  },
 ];
 
 const photoItems = [
@@ -99,23 +87,23 @@ export default function Home() {
             </p>
             <h1 className="text-4xl font-bold leading-tight md:text-6xl">Kelola Respons Banjir Lebih Cepat, Tepat, dan Terkoordinasi</h1>
             <p className="mt-4 max-w-2xl text-sm text-blue-100 md:text-base">
-              Solusi monitoring banjir berbasis data real-time untuk memudahkan deteksi dini, koordinasi lintas tim,
-              dan pengambilan keputusan saat kondisi kritis.
+              Sistem peringatan dini berbasis sensor untuk membantu masyarakat memantau potensi banjir, memahami
+              tingkat risiko, dan mengambil tindakan cepat saat kondisi darurat.
             </p>
           </Reveal>
 
           <Reveal delayMs={120} className="mt-8 flex flex-wrap gap-3">
             <Link
-              href="/dashboard"
+              href="/#realtime-dashboard"
               className="rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-blue-700 transition-colors hover:bg-blue-50"
             >
-              Lihat Dashboard Publik
+              Lihat Dashboard Real-Time
             </Link>
             <Link
-              href="/login"
+              href="/#emergency-action"
               className="rounded-lg border border-white/50 px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-white/10"
             >
-              Login
+              Tindakan Darurat
             </Link>
           </Reveal>
 
@@ -142,174 +130,163 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="features" className="bg-white">
-        <div className="mx-auto w-full max-w-6xl px-6 py-16">
-          <Reveal className="mb-10 max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">Fitur Lengkap</p>
-            <h2 className="mt-2 text-3xl font-bold text-slate-900">Semua kebutuhan monitoring dalam satu platform</h2>
-            <p className="mt-3 text-sm text-slate-600">
-              Dirancang untuk instansi dan tim tanggap bencana agar alur pemantauan hingga respons berjalan lebih
-              efisien.
-            </p>
-          </Reveal>
+      <PublicRealtimeDashboardSection />
 
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {featureItems.map((item, index) => (
-              <Reveal key={item.title} delayMs={80 * (index + 1)}>
-                <Card className="h-full border-blue-100">
-                  <h3 className="text-base font-semibold text-slate-900">{item.title}</h3>
-                  <p className="mt-2 text-sm text-slate-600">{item.description}</p>
-                </Card>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="workflow" className="bg-blue-50">
+      <section id="status-legend" className="bg-blue-50">
         <div className="mx-auto w-full max-w-6xl px-6 py-16">
           <Reveal className="mb-10 max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">Alur Kerja</p>
-            <h2 className="mt-2 text-3xl font-bold text-blue-900">4 langkah inti pengelolaan sistem peringatan dini</h2>
+            <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">Edukasi Visual</p>
+            <h2 className="mt-2 text-3xl font-bold text-blue-900">Status Indicators & Legend</h2>
             <p className="mt-3 text-sm text-blue-800/80">
-              Mulai dari persiapan perangkat hingga evaluasi pascakejadian untuk perbaikan berkelanjutan.
+              Pahami kode warna status agar masyarakat dapat mengambil keputusan lebih cepat dan tepat.
             </p>
           </Reveal>
 
-          <div className="grid gap-4 md:grid-cols-2">
-            {workflowItems.map((item, index) => (
+          <div className="grid gap-4 md:grid-cols-3">
+            {statusLegend.map((item, index) => (
               <Reveal key={item.title} delayMs={90 * (index + 1)}>
                 <Card className="h-full border-blue-100">
-                  <span className="inline-flex size-9 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white">
-                    {item.step}
-                  </span>
+                  <span className={`inline-flex h-3 w-16 rounded-full ${item.color}`} />
                   <h3 className="mt-4 text-lg font-semibold text-slate-900">{item.title}</h3>
                   <p className="mt-2 text-sm text-slate-600">{item.description}</p>
                 </Card>
               </Reveal>
             ))}
           </div>
-
-          <div className="mt-8 grid gap-4 lg:grid-cols-2">
-            <Reveal delayMs={120}>
-              <Card className="overflow-hidden border-blue-100 p-2">
-                <Image
-                  src={photoItems[1].src}
-                  alt={photoItems[1].title}
-                  width={1200}
-                  height={780}
-                  className="h-56 w-full rounded-lg object-cover"
-                />
-                <div className="px-2 pb-2 pt-4">
-                  <h3 className="text-base font-semibold text-slate-900">{photoItems[1].title}</h3>
-                  <p className="mt-1 text-sm text-slate-600">{photoItems[1].caption}</p>
-                </div>
-              </Card>
-            </Reveal>
-            <Reveal delayMs={180}>
-              <Card className="overflow-hidden border-blue-100 p-2">
-                <Image
-                  src={photoItems[2].src}
-                  alt={photoItems[2].title}
-                  width={1200}
-                  height={780}
-                  className="h-56 w-full rounded-lg object-cover"
-                />
-                <div className="px-2 pb-2 pt-4">
-                  <h3 className="text-base font-semibold text-slate-900">{photoItems[2].title}</h3>
-                  <p className="mt-1 text-sm text-slate-600">{photoItems[2].caption}</p>
-                </div>
-              </Card>
-            </Reveal>
-          </div>
         </div>
       </section>
 
-      <section id="stats" className="bg-white">
+      <section id="emergency-action" className="bg-white">
         <div className="mx-auto w-full max-w-6xl px-6 py-16">
-          <Reveal className="mb-8 max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">Ringkasan Operasional</p>
-            <h2 className="mt-2 text-3xl font-bold text-slate-900">Data lapangan dalam satu pandangan</h2>
-          </Reveal>
-
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {stats.map((item, index) => (
-              <Reveal key={item.label} delayMs={70 * (index + 1)}>
-                <Card className="h-full border-slate-200">
-                  <p className="text-3xl font-bold text-blue-700">{item.value}</p>
-                  <p className="mt-2 text-sm text-slate-600">{item.label}</p>
-                </Card>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="partners" className="bg-slate-50">
-        <div className="mx-auto w-full max-w-6xl px-6 py-16">
-          <Reveal className="mb-8 max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">Mitra & Lembaga</p>
-            <h2 className="mt-2 text-3xl font-bold text-slate-900">Instansi yang terhubung dalam ekosistem EWS</h2>
-          </Reveal>
-
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {institutions.map((name, index) => (
-              <Reveal key={name} delayMs={50 * (index + 1)}>
-                <Card className="border-slate-200 py-4">
-                  <p className="text-sm font-semibold text-slate-800">{name}</p>
-                </Card>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-white">
-        <div className="mx-auto w-full max-w-6xl px-6 py-16">
-          <Reveal className="rounded-2xl border border-blue-100 bg-blue-600 p-8 text-white">
-            <h2 className="text-2xl font-bold">Siap meningkatkan kesiapsiagaan banjir?</h2>
-            <p className="mt-2 max-w-2xl text-sm text-blue-100">
-              Masuk ke platform untuk mulai memantau kondisi lapangan, mengelola alert, dan mengoordinasikan respons.
+          <Reveal className="mb-10 max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">Tindakan Cepat</p>
+            <h2 className="mt-2 text-3xl font-bold text-slate-900">Emergency Action Section</h2>
+            <p className="mt-3 text-sm text-slate-600">
+              Tombol one-click call berikut memudahkan masyarakat menghubungi layanan darurat saat kondisi kritis.
             </p>
-            <div className="mt-6">
-              <Link
-                href="/login"
-                className="inline-flex rounded-lg border border-white/40 px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-white/10"
-              >
-                Login ke Dashboard
-              </Link>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <section id="contact" className="bg-slate-50">
-        <div className="mx-auto w-full max-w-6xl px-6 py-16">
-          <Reveal className="mb-8 max-w-2xl">
-            <h2 className="text-3xl font-bold text-slate-900">Kontak</h2>
-            <p className="mt-2 text-sm text-slate-600">Butuh demo atau integrasi lanjutan? Tim kami siap membantu.</p>
           </Reveal>
 
           <div className="grid gap-4 md:grid-cols-3">
-            <Reveal delayMs={80}>
-              <Card>
-                <h3 className="font-semibold text-slate-900">Email</h3>
-                <p className="mt-2 text-sm text-slate-600">support@ewsfloodguard.id</p>
+            {emergencyContacts.map((contact, index) => (
+              <Reveal key={contact.name} delayMs={80 * (index + 1)}>
+                <Card className="border-slate-200">
+                  <h3 className="text-lg font-semibold text-slate-900">{contact.name}</h3>
+                  <p className="mt-1 text-sm text-slate-600">Nomor prioritas tanggap darurat</p>
+                  <a
+                    href={`tel:${contact.phone}`}
+                    className="mt-4 inline-flex rounded-lg bg-rose-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-rose-700"
+                  >
+                    Hubungi {contact.phone}
+                  </a>
+                </Card>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="education-faq" className="bg-slate-50">
+        <div className="mx-auto w-full max-w-6xl px-6 py-16">
+          <Reveal className="mb-10 max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">Flood Education & FAQ</p>
+            <h2 className="mt-2 text-3xl font-bold text-slate-900">Panduan Keselamatan dan Persiapan Darurat</h2>
+          </Reveal>
+
+          <div className="grid gap-4 lg:grid-cols-2">
+            <Reveal>
+              <Card className="h-full border-blue-100">
+                <h3 className="text-lg font-semibold text-slate-900">Panduan Evakuasi Saat Status Merah</h3>
+                <ol className="mt-4 space-y-3 text-sm text-slate-700">
+                  {evacuationGuide.map((item, index) => (
+                    <li key={item} className="flex gap-3">
+                      <span className="inline-flex h-6 min-w-6 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-blue-700">
+                        {index + 1}
+                      </span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ol>
               </Card>
             </Reveal>
-            <Reveal delayMs={140}>
-              <Card>
-                <h3 className="font-semibold text-slate-900">Telepon</h3>
-                <p className="mt-2 text-sm text-slate-600">+62 21 555 0199</p>
-              </Card>
-            </Reveal>
-            <Reveal delayMs={200}>
-              <Card>
-                <h3 className="font-semibold text-slate-900">Alamat</h3>
-                <p className="mt-2 text-sm text-slate-600">Jakarta Pusat, Indonesia</p>
+
+            <Reveal delayMs={120}>
+              <Card className="h-full border-blue-100">
+                <h3 className="text-lg font-semibold text-slate-900">Daftar Barang Darurat Wajib</h3>
+                <ul className="mt-4 space-y-2 text-sm text-slate-700">
+                  {emergencyKit.map((item) => (
+                    <li key={item} className="flex gap-2">
+                      <span className="mt-1 inline-block h-2 w-2 rounded-full bg-blue-600" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </Card>
             </Reveal>
           </div>
+
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+            {faqs.map((item, index) => (
+              <Reveal key={item.q} delayMs={70 * (index + 1)}>
+                <Card className="h-full">
+                  <h3 className="text-base font-semibold text-slate-900">{item.q}</h3>
+                  <p className="mt-2 text-sm text-slate-600">{item.a}</p>
+                </Card>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" className="bg-white">
+        <div className="mx-auto w-full max-w-6xl px-6 py-16">
+          <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
+            <Reveal className="rounded-2xl border border-blue-100 bg-blue-600 p-8 text-white">
+              <h2 className="text-2xl font-bold">Halaman Kontak</h2>
+              <p className="mt-2 max-w-2xl text-sm text-blue-100">
+                Butuh koordinasi dengan tim kami? Kunjungi halaman kontak untuk informasi lengkap, bantuan, dan kanal
+                komunikasi resmi EWS.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link
+                  href="/contact"
+                  className="inline-flex rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-blue-700 transition-colors hover:bg-blue-50"
+                >
+                  Buka Halaman Kontak
+                </Link>
+                <Link
+                  href="/login"
+                  className="inline-flex rounded-lg border border-white/40 px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-white/10"
+                >
+                  Login Admin
+                </Link>
+              </div>
+            </Reveal>
+
+            <Reveal delayMs={140}>
+              <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
+                <Image
+                  src={photoItems[2].src}
+                  alt="Tim admin memantau sensor EWS"
+                  width={1200}
+                  height={780}
+                  className="h-full min-h-56 w-full rounded-xl object-cover"
+                />
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-blue-50">
+        <div className="mx-auto w-full max-w-6xl px-6 py-10">
+          <Reveal className="rounded-2xl border border-blue-100 bg-white p-5 md:p-6">
+            <h3 className="text-lg font-semibold text-slate-900">Info Curah Hujan (Kategori)</h3>
+            <div className="mt-3 flex flex-wrap gap-2 text-sm">
+              <span className="rounded-full bg-emerald-100 px-3 py-1 font-medium text-emerald-700">Ringan (&lt; 5 mm/jam)</span>
+              <span className="rounded-full bg-amber-100 px-3 py-1 font-medium text-amber-700">Sedang (5–20 mm/jam)</span>
+              <span className="rounded-full bg-rose-100 px-3 py-1 font-medium text-rose-700">Lebat (&gt; 20 mm/jam)</span>
+            </div>
+          </Reveal>
         </div>
       </section>
     </main>

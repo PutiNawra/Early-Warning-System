@@ -11,8 +11,8 @@ export function WaterLevelChart({ points }: WaterLevelChartProps) {
     <div className="space-y-3">
       <h3 className="text-base font-semibold text-slate-800">Grafik Ketinggian Air</h3>
       <div className="grid grid-cols-10 gap-2">
-        {points.slice(-10).map((point) => (
-          <div key={point.timestamp} className="flex flex-col items-center gap-2">
+        {points.slice(-10).map((point, index) => (
+          <div key={`${point.sensorId}-${point.timestamp}-${index}`} className="flex flex-col items-center gap-2">
             <div
               className="w-full rounded-md bg-blue-500"
               style={{ height: `${Math.max(12, (point.levelCm / max) * 120)}px` }}

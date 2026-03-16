@@ -1,17 +1,17 @@
 import Link from "next/link";
 
 const productLinks = [
-  { label: "Fitur", href: "/#features" },
+  { label: "Dashboard Real-Time", href: "/#realtime-dashboard" },
   { label: "Dashboard", href: "/dashboard" },
   { label: "Peta Sensor", href: "/map" },
-  { label: "Dokumentasi", href: "/education" },
+  { label: "Edukasi & FAQ", href: "/#education-faq" },
 ];
 
 const companyLinks = [
   { label: "Tentang Kami", href: "/#home" },
   { label: "Kontak Darurat", href: "/emergency" },
-  { label: "Alur Kerja", href: "/#workflow" },
-  { label: "Kebijakan Privasi", href: "/#contact" },
+  { label: "Status & Legend", href: "/#status-legend" },
+  { label: "Halaman Kontak", href: "/contact" },
 ];
 
 export function Footer() {

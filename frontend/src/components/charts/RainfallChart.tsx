@@ -11,8 +11,8 @@ export function RainfallChart({ points }: RainfallChartProps) {
     <div className="space-y-3">
       <h3 className="text-base font-semibold text-slate-800">Grafik Curah Hujan</h3>
       <div className="space-y-2">
-        {points.slice(-6).map((point) => (
-          <div key={point.timestamp} className="space-y-1">
+        {points.slice(-6).map((point, index) => (
+          <div key={`${point.sensorId}-${point.timestamp}-${index}`} className="space-y-1">
             <div className="h-2 rounded-full bg-slate-200">
               <div
                 className="h-2 rounded-full bg-cyan-500"

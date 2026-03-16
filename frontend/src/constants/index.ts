@@ -22,10 +22,10 @@ export const publicNavLinks = [
 
 export const landingNavLinks = [
   { id: "home", href: "/#home", label: "Beranda" },
-  { id: "features", href: "/#features", label: "Fitur" },
-  { id: "workflow", href: "/#workflow", label: "Alur" },
-  { id: "stats", href: "/#stats", label: "Data" },
-  { id: "partners", href: "/#partners", label: "Mitra" },
+  { id: "realtime-dashboard", href: "/#realtime-dashboard", label: "Dashboard" },
+  { id: "status-legend", href: "/#status-legend", label: "Status" },
+  { id: "emergency-action", href: "/#emergency-action", label: "Darurat" },
+  { id: "education-faq", href: "/#education-faq", label: "Edukasi & FAQ" },
   { id: "contact", href: "/#contact", label: "Kontak" },
 ];
 
