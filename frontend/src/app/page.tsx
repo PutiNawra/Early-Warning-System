@@ -78,55 +78,54 @@ const photoItems = [
 export default function Home() {
   return (
     <main>
-      <section id="home" className="relative overflow-hidden bg-linear-to-br from-blue-900 via-blue-700 to-cyan-600 text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.25),transparent_40%)]" />
-        <div className="relative mx-auto grid min-h-[78vh] w-full max-w-6xl items-center gap-10 px-6 py-16 lg:grid-cols-2">
-          <Reveal className="max-w-3xl">
-            <p className="mb-4 inline-block w-fit rounded-full border border-white/30 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider">
-              Platform Early Warning System
-            </p>
-            <h1 className="text-4xl font-bold leading-tight md:text-6xl">Kelola Respons Banjir Lebih Cepat, Tepat, dan Terkoordinasi</h1>
-            <p className="mt-4 max-w-2xl text-sm text-blue-100 md:text-base">
-              Sistem peringatan dini berbasis sensor untuk membantu masyarakat memantau potensi banjir, memahami
-              tingkat risiko, dan mengambil tindakan cepat saat kondisi darurat.
-            </p>
-          </Reveal>
+      <section id="home" className="relative isolate overflow-hidden text-white">
+        <Image
+          src={photoItems[0].src}
+          alt={photoItems[0].title}
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-linear-to-r from-blue-950/90 via-blue-900/75 to-cyan-700/55" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.2),transparent_42%)]" />
 
-          <Reveal delayMs={120} className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href="/#realtime-dashboard"
-              className="rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-blue-700 transition-colors hover:bg-blue-50"
-            >
-              Lihat Dashboard Real-Time
-            </Link>
-            <Link
-              href="/#emergency-action"
-              className="rounded-lg border border-white/50 px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-white/10"
-            >
-              Tindakan Darurat
-            </Link>
-          </Reveal>
+        <div className="relative mx-auto flex min-h-[86vh] w-full max-w-6xl items-center justify-center px-6 py-20 md:py-24">
+          <div className="max-w-3xl text-center">
+            <Reveal className="flex flex-col items-center">
+              <p className="mb-4 inline-block w-fit rounded-full border border-white/35 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-blue-50 backdrop-blur-sm">
+                Platform Early Warning System
+              </p>
+              <h1 className="text-4xl font-bold leading-tight drop-shadow-sm md:text-6xl">
+                Kelola Respons Banjir Lebih Cepat, Tepat, dan Terkoordinasi
+              </h1>
+              <p className="mt-4 max-w-2xl text-sm text-blue-100 md:text-lg">
+                Sistem peringatan dini berbasis sensor untuk membantu masyarakat memantau potensi banjir, memahami
+                tingkat risiko, dan mengambil tindakan cepat saat kondisi darurat.
+              </p>
+            </Reveal>
 
-          <Reveal delayMs={200} className="mt-8 flex flex-wrap gap-3 text-xs text-blue-100">
-            <span className="rounded-full border border-white/30 px-3 py-1">Data real-time</span>
-            <span className="rounded-full border border-white/30 px-3 py-1">Alert otomatis</span>
-            <span className="rounded-full border border-white/30 px-3 py-1">Peta risiko interaktif</span>
-          </Reveal>
+            <Reveal delayMs={120} className="mt-8 flex flex-wrap justify-center gap-3">
+              <Link
+                href="/#realtime-dashboard"
+                className="rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-blue-700 shadow-lg shadow-blue-950/20 transition-colors hover:bg-blue-50"
+              >
+                Lihat Dashboard Real-Time
+              </Link>
+              <Link
+                href="/#emergency-action"
+                className="rounded-lg border border-white/50 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/15"
+              >
+                Tindakan Darurat
+              </Link>
+            </Reveal>
 
-          <Reveal delayMs={160} className="overflow-hidden rounded-2xl border border-white/25 bg-white/10 p-2 shadow-xl backdrop-blur-sm">
-            <Image
-              src={photoItems[0].src}
-              alt={photoItems[0].title}
-              width={1200}
-              height={780}
-              className="h-80 w-full rounded-xl object-cover"
-              priority
-            />
-            <div className="px-2 pb-2 pt-4">
-              <p className="text-sm font-semibold text-white">{photoItems[0].title}</p>
-              <p className="mt-1 text-xs text-blue-100">{photoItems[0].caption}</p>
-            </div>
-          </Reveal>
+            <Reveal delayMs={200} className="mt-8 flex flex-wrap justify-center gap-3 text-xs text-blue-100">
+              <span className="rounded-full border border-white/35 bg-white/5 px-3 py-1 backdrop-blur-sm">Data real-time</span>
+              <span className="rounded-full border border-white/35 bg-white/5 px-3 py-1 backdrop-blur-sm">Alert otomatis</span>
+              <span className="rounded-full border border-white/35 bg-white/5 px-3 py-1 backdrop-blur-sm">Peta risiko interaktif</span>
+            </Reveal>
+          </div>
         </div>
       </section>
 
