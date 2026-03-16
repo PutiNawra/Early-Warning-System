@@ -9,8 +9,8 @@ import { useAuth } from "@/hooks/useAuth";
 export default function AdminLoginPage() {
   const router = useRouter();
   const { login, dummyAccounts } = useAuth();
-  const [email, setEmail] = useState("admin@ews.local");
-  const [password, setPassword] = useState("Admin123!");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = (e: FormEvent) => {
@@ -26,18 +26,10 @@ export default function AdminLoginPage() {
     router.push("/admin/dashboard");
   };
 
-  const quickLogin = (quickEmail: string, quickPassword: string) => {
+  const fillDummyAccount = (quickEmail: string, quickPassword: string) => {
     setEmail(quickEmail);
     setPassword(quickPassword);
-    const result = login(quickEmail, quickPassword);
-
-    if (!result.ok) {
-      setError(result.message);
-      return;
-    }
-
     setError(null);
-    router.push("/admin/dashboard");
   };
 
   return (
@@ -46,13 +38,13 @@ export default function AdminLoginPage() {
       <p className="mb-6 mt-2 text-sm text-slate-600">Masuk untuk mengelola sensor, threshold, dan broadcast alert.</p>
 
       <div className="mb-4 rounded-lg border border-slate-200 bg-slate-50 p-3">
-        <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Login Cepat (Dummy)</p>
+        <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Isi Cepat Akun Dummy</p>
         <div className="flex flex-wrap gap-2">
           {dummyAccounts.map((account) => (
             <button
               key={account.email}
               type="button"
-              onClick={() => quickLogin(account.email, account.password)}
+              onClick={() => fillDummyAccount(account.email, account.password)}
               className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-600 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
             >
               {account.role} · {account.name}
