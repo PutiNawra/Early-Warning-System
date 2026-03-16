@@ -4,6 +4,7 @@ export interface WaterLevelPoint {
   timestamp: string;
   levelCm: number;
   rainfallMm: number;
+  flowSpeedMs?: number;
   sensorId: string;
 }
 

@@ -15,12 +15,21 @@ export function useWaterLevel() {
   });
 
   const [history, setHistory] = useState<WaterLevelPoint[]>(() => {
-    return Array.from({ length: 12 }).map((_, i) => ({
-      timestamp: new Date(Date.now() - (11 - i) * 10 * 60 * 1000).toISOString(),
-      levelCm: 120 + i * 4,
-      rainfallMm: 5 + i,
-      sensorId: "SEN-01",
-    }));
+    return Array.from({ length: 7 * 24 }).map((_, i) => {
+      const distance = 7 * 24 - 1 - i;
+      const ts = Date.now() - distance * 60 * 60 * 1000;
+      const wave = Math.sin(i / 9) * 18;
+      const rainWave = Math.abs(Math.cos(i / 11)) * 6;
+      const flowWave = Math.abs(Math.sin(i / 7)) * 1.2;
+
+      return {
+        timestamp: new Date(ts).toISOString(),
+        levelCm: Math.round(128 + wave + (i % 5)),
+        rainfallMm: Math.round(4 + rainWave + (i % 3)),
+        flowSpeedMs: Number((0.7 + flowWave + (i % 4) * 0.08).toFixed(2)),
+        sensorId: "SEN-01",
+      };
+    });
   });
 
   useEffect(() => {
@@ -41,10 +50,11 @@ export function useWaterLevel() {
             timestamp: nextLatest.updatedAt,
             levelCm: nextLatest.levelCm,
             rainfallMm: nextLatest.rainfallMm,
+            flowSpeedMs: Number((Math.max(0.3, nextLatest.levelCm / 220 + nextLatest.rainfallMm / 35)).toFixed(2)),
             sensorId: nextLatest.sensorId,
           };
 
-          return [...prevHistory, nextPoint].slice(-20);
+          return [...prevHistory, nextPoint].slice(-7 * 24 * 2);
         });
 
         return nextLatest;

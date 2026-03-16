@@ -5,6 +5,7 @@ import { RainfallCard } from "@/components/dashboard/RainfallCard";
 import { WaterLevelGauge } from "@/components/dashboard/WaterLevelGauge";
 import { WaterLevelChart } from "@/components/charts/WaterLevelChart";
 import { RainfallChart } from "@/components/charts/RainfallChart";
+import { FlowSpeedChart } from "@/components/charts/FlowSpeedChart";
 import { Card } from "@/components/ui/Card";
 import { StatusIndicator } from "@/components/ui/StatusIndicator";
 import { useWaterLevel } from "@/hooks/useWaterLevel";
@@ -34,12 +35,15 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 lg:grid-cols-3">
         <Card>
           <WaterLevelChart points={history} />
         </Card>
         <Card>
           <RainfallChart points={history} />
+        </Card>
+        <Card>
+          <FlowSpeedChart points={history} />
         </Card>
       </div>
     </main>

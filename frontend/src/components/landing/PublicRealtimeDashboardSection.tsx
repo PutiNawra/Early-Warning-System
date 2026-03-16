@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/Card";
 import { StatusIndicator } from "@/components/ui/StatusIndicator";
 import { WaterLevelChart } from "@/components/charts/WaterLevelChart";
 import { RainfallChart } from "@/components/charts/RainfallChart";
+import { FlowSpeedChart } from "@/components/charts/FlowSpeedChart";
 import { mockSensors } from "@/constants";
 import { useWaterLevel } from "@/hooks/useWaterLevel";
 import { formatTimestamp, getStatusFromLevel } from "@/lib/utils";
@@ -163,12 +164,15 @@ export function PublicRealtimeDashboardSection() {
           </Card>
         </div>
 
-        <div className="mt-4 grid gap-4 md:grid-cols-2">
+        <div className="mt-4 grid gap-4 lg:grid-cols-3">
           <Card>
             <WaterLevelChart points={history} />
           </Card>
           <Card>
             <RainfallChart points={history} />
+          </Card>
+          <Card>
+            <FlowSpeedChart points={history} />
           </Card>
         </div>
       </div>
