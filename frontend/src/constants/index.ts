@@ -20,6 +20,15 @@ export const publicNavLinks = [
   { href: "/education", label: "Edukasi" },
 ];
 
+export const landingNavLinks = [
+  { id: "home", href: "/#home", label: "Beranda" },
+  { id: "features", href: "/#features", label: "Fitur" },
+  { id: "workflow", href: "/#workflow", label: "Alur" },
+  { id: "stats", href: "/#stats", label: "Data" },
+  { id: "partners", href: "/#partners", label: "Mitra" },
+  { id: "contact", href: "/#contact", label: "Kontak" },
+];
+
 export const adminNavLinks = [
   { href: "/admin/dashboard", label: "Dashboard" },
   { href: "/admin/sensors", label: "Sensors" },

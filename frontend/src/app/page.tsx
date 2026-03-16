@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Card } from "@/components/ui/Card";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -68,12 +69,30 @@ const institutions = [
   "Pusat Kendali Darurat Kota",
 ];
 
+const photoItems = [
+  {
+    title: "Pemantauan Debit Sungai",
+    caption: "Sensor lapangan mengirim data perubahan tinggi muka air secara berkala.",
+    src: "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=1400&q=80",
+  },
+  {
+    title: "Area Terdampak Banjir",
+    caption: "Visual lapangan membantu admin menentukan prioritas respons darurat.",
+    src: "https://images.unsplash.com/photo-1570288685369-f7305163d0e3?auto=format&fit=crop&w=1400&q=80",
+  },
+  {
+    title: "Tim Operator & Admin",
+    caption: "Admin mengelola sensor, memvalidasi alert, dan mengoordinasikan informasi ke publik.",
+    src: "https://images.unsplash.com/photo-1526498460520-4c246339dccb?auto=format&fit=crop&w=1400&q=80",
+  },
+];
+
 export default function Home() {
   return (
     <main>
-      <section className="relative overflow-hidden bg-linear-to-br from-blue-900 via-blue-700 to-cyan-600 text-white">
+      <section id="home" className="relative overflow-hidden bg-linear-to-br from-blue-900 via-blue-700 to-cyan-600 text-white">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.25),transparent_40%)]" />
-        <div className="relative mx-auto flex min-h-[78vh] w-full max-w-6xl flex-col justify-center px-6 py-16">
+        <div className="relative mx-auto grid min-h-[78vh] w-full max-w-6xl items-center gap-10 px-6 py-16 lg:grid-cols-2">
           <Reveal className="max-w-3xl">
             <p className="mb-4 inline-block w-fit rounded-full border border-white/30 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider">
               Platform Early Warning System
@@ -104,6 +123,21 @@ export default function Home() {
             <span className="rounded-full border border-white/30 px-3 py-1">Data real-time</span>
             <span className="rounded-full border border-white/30 px-3 py-1">Alert otomatis</span>
             <span className="rounded-full border border-white/30 px-3 py-1">Peta risiko interaktif</span>
+          </Reveal>
+
+          <Reveal delayMs={160} className="overflow-hidden rounded-2xl border border-white/25 bg-white/10 p-2 shadow-xl backdrop-blur-sm">
+            <Image
+              src={photoItems[0].src}
+              alt={photoItems[0].title}
+              width={1200}
+              height={780}
+              className="h-80 w-full rounded-xl object-cover"
+              priority
+            />
+            <div className="px-2 pb-2 pt-4">
+              <p className="text-sm font-semibold text-white">{photoItems[0].title}</p>
+              <p className="mt-1 text-xs text-blue-100">{photoItems[0].caption}</p>
+            </div>
           </Reveal>
         </div>
       </section>
@@ -155,10 +189,43 @@ export default function Home() {
               </Reveal>
             ))}
           </div>
+
+          <div className="mt-8 grid gap-4 lg:grid-cols-2">
+            <Reveal delayMs={120}>
+              <Card className="overflow-hidden border-blue-100 p-2">
+                <Image
+                  src={photoItems[1].src}
+                  alt={photoItems[1].title}
+                  width={1200}
+                  height={780}
+                  className="h-56 w-full rounded-lg object-cover"
+                />
+                <div className="px-2 pb-2 pt-4">
+                  <h3 className="text-base font-semibold text-slate-900">{photoItems[1].title}</h3>
+                  <p className="mt-1 text-sm text-slate-600">{photoItems[1].caption}</p>
+                </div>
+              </Card>
+            </Reveal>
+            <Reveal delayMs={180}>
+              <Card className="overflow-hidden border-blue-100 p-2">
+                <Image
+                  src={photoItems[2].src}
+                  alt={photoItems[2].title}
+                  width={1200}
+                  height={780}
+                  className="h-56 w-full rounded-lg object-cover"
+                />
+                <div className="px-2 pb-2 pt-4">
+                  <h3 className="text-base font-semibold text-slate-900">{photoItems[2].title}</h3>
+                  <p className="mt-1 text-sm text-slate-600">{photoItems[2].caption}</p>
+                </div>
+              </Card>
+            </Reveal>
+          </div>
         </div>
       </section>
 
-      <section className="bg-white">
+      <section id="stats" className="bg-white">
         <div className="mx-auto w-full max-w-6xl px-6 py-16">
           <Reveal className="mb-8 max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">Ringkasan Operasional</p>
@@ -178,7 +245,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-slate-50">
+      <section id="partners" className="bg-slate-50">
         <div className="mx-auto w-full max-w-6xl px-6 py-16">
           <Reveal className="mb-8 max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">Mitra & Lembaga</p>
@@ -216,7 +283,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="contact-section" className="bg-slate-50">
+      <section id="contact" className="bg-slate-50">
         <div className="mx-auto w-full max-w-6xl px-6 py-16">
           <Reveal className="mb-8 max-w-2xl">
             <h2 className="text-3xl font-bold text-slate-900">Kontak</h2>
