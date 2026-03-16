@@ -16,9 +16,9 @@ const supportChannels = [
   },
   {
     title: "Alamat Operasional",
-    value: "Jakarta, Indonesia",
+    value: "Padang, Sumatera Barat",
     actionLabel: "Lihat di Peta",
-    href: "https://www.google.com/maps?q=Jakarta,Indonesia",
+    href: "https://www.google.com/maps?q=Padang,Sumatera+Barat",
   },
 ];
 

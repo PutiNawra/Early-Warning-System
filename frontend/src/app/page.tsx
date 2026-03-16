@@ -357,58 +357,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="contact" className="bg-white">
-        <div className="mx-auto w-full max-w-6xl px-6 py-16">
-          <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-            <Reveal className="rounded-2xl border border-blue-100 bg-blue-600 p-8 text-white">
-              <h2 className="text-2xl font-bold">Halaman Kontak</h2>
-              <p className="mt-2 max-w-2xl text-sm text-blue-100">
-                Butuh koordinasi dengan tim kami? Kunjungi halaman kontak untuk informasi lengkap, bantuan, dan kanal
-                komunikasi resmi EWS.
-              </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Link
-                  href="/contact"
-                  className="inline-flex rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-blue-700 transition-colors hover:bg-blue-50"
-                >
-                  Buka Halaman Kontak
-                </Link>
-                <Link
-                  href="/login"
-                  className="inline-flex rounded-lg border border-white/40 px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-white/10"
-                >
-                  Login Admin
-                </Link>
-              </div>
-            </Reveal>
-
-            <Reveal delayMs={140}>
-              <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
-                <Image
-                  src={photoItems[2].src}
-                  alt="Tim admin memantau sensor EWS"
-                  width={1200}
-                  height={780}
-                  className="h-full min-h-56 w-full rounded-xl object-cover"
-                />
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-blue-50">
-        <div className="mx-auto w-full max-w-6xl px-6 py-10">
-          <Reveal className="rounded-2xl border border-blue-100 bg-white p-5 md:p-6">
-            <h3 className="text-lg font-semibold text-slate-900">Info Curah Hujan (Kategori)</h3>
-            <div className="mt-3 flex flex-wrap gap-2 text-sm">
-              <span className="rounded-full bg-emerald-100 px-3 py-1 font-medium text-emerald-700">Ringan (&lt; 5 mm/jam)</span>
-              <span className="rounded-full bg-amber-100 px-3 py-1 font-medium text-amber-700">Sedang (5–20 mm/jam)</span>
-              <span className="rounded-full bg-rose-100 px-3 py-1 font-medium text-rose-700">Lebat (&gt; 20 mm/jam)</span>
-            </div>
-          </Reveal>
-        </div>
-      </section>
     </main>
   );
 }

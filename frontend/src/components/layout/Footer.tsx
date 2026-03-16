@@ -97,7 +97,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2.5">
                 <span aria-hidden="true">📍</span>
-                <span>Jakarta, Indonesia</span>
+                <span>Padang, Sumatera Barat</span>
               </li>
             </ul>
           </div>
