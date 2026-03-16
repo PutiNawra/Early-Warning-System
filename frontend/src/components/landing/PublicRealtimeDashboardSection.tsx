@@ -25,15 +25,22 @@ function getThermometerColor(status: WaterStatus) {
 const fallbackSensor = {
   id: "SEN-01",
   name: "Sensor Utama",
-  riverName: "Sungai Utama",
-  latitude: -6.2,
-  longitude: 106.8,
+  riverName: "Batang Arau",
+  latitude: -0.9478,
+  longitude: 100.3615,
   connectivity: "online" as const,
   batteryPercent: 80,
   lastLevelCm: 120,
   status: "safe" as const,
   updatedAt: new Date().toISOString(),
 };
+
+const sideIndicators = [
+  { label: "Hijau (Normal)", color: "bg-emerald-500", text: "Aman, aktivitas normal." },
+  { label: "Kuning (Waspada)", color: "bg-yellow-400", text: "Pantau perkembangan." },
+  { label: "Oren (Siaga)", color: "bg-orange-500", text: "Siap evakuasi dini." },
+  { label: "Merah (Bahaya)", color: "bg-rose-600", text: "Evakuasi segera." },
+];
 
 export function PublicRealtimeDashboardSection() {
   const { latest, history } = useWaterLevel();
@@ -77,7 +84,7 @@ export function PublicRealtimeDashboardSection() {
             <div className="overflow-hidden rounded-lg border border-slate-200">
               <iframe
                 title="Peta sensor EWS"
-                src={`https://maps.google.com/maps?q=${selectedSensor.latitude},${selectedSensor.longitude}&z=13&output=embed`}
+                src={`https://maps.google.com/maps?q=${selectedSensor.latitude},${selectedSensor.longitude}&t=k&z=13&output=embed`}
                 className="h-72 w-full"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
@@ -106,7 +113,7 @@ export function PublicRealtimeDashboardSection() {
               Lokasi terpilih: <span className="font-semibold">{selectedSensor.name}</span> ({selectedSensor.latitude.toFixed(4)}, {" "}
               {selectedSensor.longitude.toFixed(4)}) • Update: {formatTimestamp(latest.updatedAt)} •{" "}
               <a
-                href={`https://www.google.com/maps?q=${selectedSensor.latitude},${selectedSensor.longitude}`}
+                href={`https://www.google.com/maps?q=${selectedSensor.latitude},${selectedSensor.longitude}&t=k`}
                 target="_blank"
                 rel="noreferrer"
                 className="font-semibold text-blue-700 hover:text-blue-800"
@@ -138,6 +145,19 @@ export function PublicRealtimeDashboardSection() {
                   Curah hujan {rainfallCategory.label} ({rainfallCategory.detail})
                 </p>
                 <p className="text-sm text-slate-700">{adjustedRainfall} mm/jam</p>
+              </div>
+            </div>
+
+            <div className="mt-5 border-t border-slate-200 pt-4">
+              <h4 className="text-sm font-semibold text-slate-800">Indikator Status</h4>
+              <div className="mt-3 space-y-2.5">
+                {sideIndicators.map((indicator) => (
+                  <div key={indicator.label} className="flex items-center gap-2.5 text-sm text-slate-700">
+                    <span className={`inline-flex h-2.5 w-2.5 rounded-full ${indicator.color}`} />
+                    <span className="font-medium">{indicator.label}</span>
+                    <span className="text-xs text-slate-500">— {indicator.text}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </Card>

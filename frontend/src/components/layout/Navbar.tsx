@@ -46,34 +46,36 @@ export function Navbar() {
       return;
     }
 
-    const sectionElements = links
-      .map((item) => document.getElementById(item.id))
-      .filter((element): element is HTMLElement => Boolean(element));
+    const navbarOffset = 92;
 
-    if (sectionElements.length === 0) {
-      return;
-    }
+    const updateActiveSection = () => {
+      const currentPosition = window.scrollY + navbarOffset;
+      let currentSection = links[0]?.id ?? "home";
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntries = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-
-        if (visibleEntries.length > 0) {
-          setActiveSection(visibleEntries[0].target.id);
+      links.forEach((item) => {
+        const section = document.getElementById(item.id);
+        if (!section) {
+          return;
         }
-      },
-      {
-        rootMargin: "-30% 0px -55% 0px",
-        threshold: [0.15, 0.3, 0.6, 1],
-      },
-    );
 
-    sectionElements.forEach((section) => observer.observe(section));
+        if (section.offsetTop <= currentPosition) {
+          currentSection = item.id;
+        }
+      });
+
+      setActiveSection(currentSection);
+    };
+
+    const frameId = window.requestAnimationFrame(updateActiveSection);
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", updateActiveSection);
+    window.addEventListener("hashchange", updateActiveSection);
 
     return () => {
-      observer.disconnect();
+      window.cancelAnimationFrame(frameId);
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+      window.removeEventListener("hashchange", updateActiveSection);
     };
   }, [isHomePage, links]);
 
